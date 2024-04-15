@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useContext } from "react";
 import {
   Box,
   Flex,
@@ -11,8 +11,10 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { api } from "../utils/utils";
+import { AuthContext } from "../context/authcontext";
 
 const MaintenanceRequestForm = () => {
+  const {user} = useContext(AuthContext)
   const [apartment, setApartment] = useState("");
   const [houseNumber, setHouseNumber] = useState("");
   const [issueDescription, setIssueDescription] = useState("");
@@ -31,6 +33,7 @@ const MaintenanceRequestForm = () => {
       const response = await api.post("maintenance/", {
         apartment: apartmentAddress,
         issue_description: issueDescription,
+        user:user.id,
       });
 
       console.log("Maintenance request submitted:", response.data);

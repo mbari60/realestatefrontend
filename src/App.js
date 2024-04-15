@@ -1,3 +1,4 @@
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Login from "./pages/login";
@@ -18,34 +19,39 @@ import AddCleanerModal from "./admin/addcleaners";
 import MaintenanceTable from "./admin/maintenancerequests";
 import InquiriesTable from "./admin/inquiries";
 import Footer from "./components/footer";
+import "./index.css";
+import BnbBookings from "./admin/bnbbookings";
 
 function App() {
   return (
     <div className="App">
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/sign-up" element={<Signup />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/appartments" element={<Apartments />} />
-        <Route path="/bnbs" element={<Airbnbs />} />
-        <Route path="/admin" element={<AdminPage />} />
-        <Route path="/admin-dashboard" element={<AddApartmentModal />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="services/inquiry" element={<InquiryForm />} />
-        <Route path="services/transport" element={<TransportList />} />
-        <Route path="services/cleaners" element={<CleanerList />} />
-        <Route
-          path="services/maintenance"
-          element={<MaintenanceRequestForm />}
-        />
-        <Route path="/admin-addbnb" element={<AddBnBModal />} />
-        <Route path="/admin-addtransport" element={<AddTransportModal />} />
-        <Route path="/admin-addcleaner" element={<AddCleanerModal />} />
-        <Route path="/admin-maintenance" element={<MaintenanceTable />} />
-        <Route path="/admin-inquiries" element={<InquiriesTable />} />
-      </Routes>
-      <Footer/>
+      <div className="MainContent">
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/sign-up" element={<Signup />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/appartments" element={<Apartments />} />
+          <Route path="/bnbs" element={<Airbnbs />} />
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/admin-dashboard" element={<AddApartmentModal />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="services/inquiry" element={<InquiryForm />} />
+          <Route path="services/transport" element={<TransportList />} />
+          <Route path="services/cleaners" element={<CleanerList />} />
+          <Route
+            path="services/maintenance"
+            element={<MaintenanceRequestForm />}
+          />
+          <Route path="/admin-addbnb" element={<AddBnBModal />} />
+          <Route path="/admin-addtransport" element={<AddTransportModal />} />
+          <Route path="/admin-addcleaner" element={<AddCleanerModal />} />
+          <Route path="/admin-maintenance" element={<MaintenanceTable />} />
+          <Route path="/admin-inquiries" element={<InquiriesTable />} />
+          <Route path="/bnbbookings" element={<BnbBookings />} />
+        </Routes>
+      </div>
+      <Footer />
     </div>
   );
 }

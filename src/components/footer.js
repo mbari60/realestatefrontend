@@ -1,11 +1,6 @@
 import React from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import {
-  Flex,
-  Box,
-  Text,
-  Link as ChakraLink,
-} from "@chakra-ui/react";
+import { Flex, Box, Text, Link as ChakraLink } from "@chakra-ui/react";
 import {
   FaInstagram,
   FaFacebook,
@@ -29,7 +24,7 @@ const Footer = () => {
     return null;
 
   return (
-    <footer className="text-white py-8" style={{ backgroundColor: "blue.300" }}>
+    <footer className="text-white py-8" style={{ backgroundColor: "#2C5282" }}>
       <Flex
         direction={{ base: "column", md: "row" }}
         justify="space-between"
@@ -39,7 +34,7 @@ const Footer = () => {
         px={4}
       >
         {/* Social Icons */}
-        <Flex spaceX="4" color="white">
+        <Flex spaceX="4">
           <Link to="#" className="text-white hover:text-gray-400">
             <FaInstagram size={24} />
           </Link>
@@ -66,12 +61,10 @@ const Footer = () => {
           color="white"
         >
           <Text mb={2}>Stay Connected:</Text>
-          <Flex spaceX="4">
+          <Flex flexWrap="wrap" gap="4">
             <NavLink to={"/contact-us"}>Contact us</NavLink>
             <NavLink to={"/feedback"}>Feedback</NavLink>
-
-            <NavLink to={"/faqs"}>Faqs</NavLink>
-
+            <NavLink to={"/faqs"}>FAQs</NavLink>
             <ChakraLink href="#" _hover={{ color: "gray.400" }}>
               Privacy
             </ChakraLink>

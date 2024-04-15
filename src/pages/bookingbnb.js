@@ -19,11 +19,25 @@ import { AuthContext } from "../context/authcontext";
 const BookingModal = ({ isOpen, onClose, airbnb }) => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const {user} = useContext(AuthContext)
-
+  const { user } = useContext(AuthContext);
   const toast = useToast();
 
   const handleSubmit = async () => {
+    if (!user) {
+      // If user is not logged in, redirect to login/signup page
+      // Replace this with your desired logic for redirection or displaying a message
+      console.log("User is not logged in");
+      // For example:
+      toast({
+        title: "Login Required",
+        description: "You need to login before booking.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+
     try {
       // Convert start and end dates to ISO 8601 format
       const formattedStartDate = new Date(startDate)
@@ -33,7 +47,7 @@ const BookingModal = ({ isOpen, onClose, airbnb }) => {
 
       const response = await api.post("bnb_bookings/", {
         airbnb,
-        user:user.id,
+        user: user.id,
         start_date: formattedStartDate,
         end_date: formattedEndDate,
       });

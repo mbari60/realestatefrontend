@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   Center,
   Flex,
@@ -6,15 +6,18 @@ import {
   Input,
   SimpleGrid,
   Select,
+  useToast,
 } from "@chakra-ui/react";
 import { api } from "../utils/utils";
 import ApartmentCard from "./apartmentcard";
+import { AuthContext } from "../context/authcontext";
 
 const Apartments = () => {
   const [apartments, setApartments] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
-
+  const { user } = useContext(AuthContext); // Access user from AuthContext
+  const toast = useToast();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -41,18 +44,40 @@ const Apartments = () => {
   // Function to handle booking
   const handleBookNow = async (id) => {
     try {
-      await api.post(`/bookings`, { apartmentId: id });
-      // Optional: Show success message or update UI
-      console.log("Booking successful!");
+      if (!user) {
+       toast({
+        title: "Login Required",
+        description: "You need to login before booking.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+      }
+      const res = await api.post(`appartment_bookings/`, { apartment: id, user: user.id }); // Send user ID along with apartment ID
+      // Update UI or show success message
+      toast({
+        title: "succees",
+        description: "you have succefully booked this apartment an email will be sent to you",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      // Update booked status of the apartment
+      setApartments((prevApartments) =>
+        prevApartments.map((apartment) =>
+          apartment.id === id ? { ...apartment, booked: true } : apartment
+        )
+      );
     } catch (error) {
-      console.error("Error booking apartment:", error);
-      // Optional: Show error message or handle error
+      console.log(error)
     }
   };
 
   // Filter apartments based on search term and selected location
   const filteredApartments = apartments.filter(
     (apartment) =>
+      !apartment.booked &&
       apartment.location.toLowerCase().includes(searchTerm.toLowerCase()) &&
       (selectedLocation === "" || apartment.location === selectedLocation)
   );
@@ -83,6 +108,7 @@ const Apartments = () => {
               key={index}
               {...apartment}
               onBookNow={() => handleBookNow(apartment.id)}
+              user={user} // Pass user object to ApartmentCard
             />
           ))}
         </SimpleGrid>

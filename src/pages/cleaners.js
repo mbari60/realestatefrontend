@@ -7,7 +7,6 @@ import {
   Text,
   Image,
   Icon,
-  Button,
   useToast,
 } from "@chakra-ui/react";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
@@ -117,15 +116,6 @@ const CleanerList = () => {
                 <Text mr={2}>Rating:</Text>
                 <Flex>{renderStars(cleaner.rating)}</Flex>
               </Flex>
-              <Button
-                colorScheme="blue"
-                onClick={() => {
-                  // Add your booking logic here
-                  console.log(`Book ${cleaner.name}`);
-                }}
-              >
-                Book Cleaner
-              </Button>
             </Box>
           ))
         )}

@@ -7,7 +7,6 @@ import {
   Text,
   Image,
   Icon,
-  Button,
   useToast,
 } from "@chakra-ui/react";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
@@ -23,7 +22,6 @@ const TransportList = () => {
       setTransportData(response.data);
       setIsLoading(false);
     } catch (error) {
-      console.error("Error fetching transport data:", error);
       toast({
         title: "An error occurred",
         description: "Failed to fetch transport data. Please try again later.",
@@ -120,15 +118,6 @@ const TransportList = () => {
                 <Text mr={2}>Rating:</Text>
                 <Flex>{renderStars(transport.rating)}</Flex>
               </Flex>
-              <Button
-                colorScheme="blue"
-                onClick={() => {
-                  // Add your booking logic here
-                  console.log(`Book ${transport.name}`);
-                }}
-              >
-                Book Transport
-              </Button>
             </Box>
           ))
         )}
