@@ -18,6 +18,8 @@ const Apartments = () => {
   const [selectedLocation, setSelectedLocation] = useState("");
   const { user } = useContext(AuthContext); // Access user from AuthContext
   const toast = useToast();
+  const [isLoadingMap, setIsLoadingMap] = useState({});
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -44,21 +46,26 @@ const Apartments = () => {
   // Function to handle booking
   const handleBookNow = async (id) => {
     try {
+      setIsLoadingMap((prevLoadingMap) => ({ ...prevLoadingMap, [id]: true }));
       if (!user) {
-       toast({
-        title: "Login Required",
-        description: "You need to login before booking.",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-      return;
+        toast({
+          title: "Login Required",
+          description: "You need to login before booking.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+        return;
       }
-      const res = await api.post(`appartment_bookings/`, { apartment: id, user: user.id }); // Send user ID along with apartment ID
+      const res = await api.post(`appartment_bookings/`, {
+        apartment: id,
+        user: user.id,
+      }); // Send user ID along with apartment ID
       // Update UI or show success message
       toast({
         title: "succees",
-        description: "you have succefully booked this apartment an email will be sent to you",
+        description:
+          "you have succefully booked this apartment an email will be sent to you",
         status: "success",
         duration: 3000,
         isClosable: true,
@@ -70,7 +77,9 @@ const Apartments = () => {
         )
       );
     } catch (error) {
-      console.log(error)
+      console.log(error);
+    } finally {
+      setIsLoadingMap(false)
     }
   };
 
@@ -108,7 +117,8 @@ const Apartments = () => {
               key={index}
               {...apartment}
               onBookNow={() => handleBookNow(apartment.id)}
-              user={user} // Pass user object to ApartmentCard
+              isLoading={isLoadingMap[apartment.id]}
+              user={user}
             />
           ))}
         </SimpleGrid>

@@ -60,7 +60,9 @@ const Home = () => {
               src="https://media.istockphoto.com/id/1460955842/photo/country-road-and-wheat-fields-at-sunrise.webp?b=1&s=170667a&w=0&k=20&c=xBSZ63u86gvHxXmEOMBI9T2d88JISlnTNwHUJUSwzOM="
               alt="Slide 3"
             />
-            <p className="legend">We also have lands for sale here both commercial and residentials</p>
+            <p className="legend">
+              We also have lands for sale here both commercial and residentials
+            </p>
           </div>
         </Carousel>
       </Box>
@@ -167,8 +169,6 @@ const Home = () => {
       </SimpleGrid>
       <br />
       <br />
-
-      {/* Additional Info Section */}
       <Flex
         justify="center"
         align="center"
@@ -198,8 +198,6 @@ const Home = () => {
       </Flex>
       <br />
       <br />
-
-      {/* Call to Action Section */}
       <Flex
         justify="center"
         align="center"
@@ -212,12 +210,8 @@ const Home = () => {
           mx={{ base: "0", md: "2" }}
           mb={{ base: "4", md: "0" }}
         >
-          <Image
-            src="https://www.baobabplatform.org/packs/media/landing/action-megaphone-8dc2a688.svg"
-            alt="Action Image"
-          />
           <Heading fontSize={{ base: "2xl", md: "4xl" }} mt="4" mb="2">
-            How can I learn More?
+            How Can I learn More?
           </Heading>
           <Text fontSize={{ base: "lg", md: "xl" }}>
             Reach out to us through our contact form for more information.
@@ -229,12 +223,8 @@ const Home = () => {
           mx={{ base: "0", md: "2" }}
           mb={{ base: "4", md: "0" }}
         >
-          <Image
-            src="https://www.baobabplatform.org/packs/media/landing/action-globe-7ad27529.svg"
-            alt="Action Image"
-          />
           <Heading fontSize={{ base: "2xl", md: "4xl" }} mt="4" mb="2">
-            Who can join?
+            Who Can Join?
           </Heading>
           <Text fontSize={{ base: "lg", md: "xl" }}>
             Anyone searching for an apartment can join our community.
@@ -246,16 +236,12 @@ const Home = () => {
           mx={{ base: "0", md: "2" }}
           mb={{ base: "4", md: "0" }}
         >
-          <Image
-            src="https://www.baobabplatform.org/packs/media/landing/action-phone-a47ab42b.svg"
-            alt="Action Image"
-          />
           <Heading fontSize={{ base: "2xl", md: "4xl" }} mt="4" mb="2">
-            Try the App
+            Try The App
           </Heading>
           <Text fontSize={{ base: "lg", md: "xl" }}>
-            Download our app for easy access on your mobile device.
-          </Text>
+           Login and get quality apartments and Airbnbs
+           </Text>
         </Box>
       </Flex>
     </Box>

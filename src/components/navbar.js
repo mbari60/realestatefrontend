@@ -40,8 +40,13 @@ const Navbar = () => {
         <Link href="/bnbs" color="white" mr="4">
           Airbnbs
         </Link>
-        <Link href="/services" color="white" mr="4">
-          Services
+        {isAuthenticated && user &&(
+          <Link href="/services" color="white" mr="4">
+            Services
+          </Link>
+        )}
+        <Link href="/about" color="white" mr="4">
+          About us
         </Link>
         <Link href="/services/inquiry" color="white" mr="4">
           Contact
@@ -84,28 +89,28 @@ const Navbar = () => {
               <DrawerHeader>Menu</DrawerHeader>
               <DrawerBody>
                 <VStack spacing="4">
-                  <Link href="#" onClick={onClose}>
+                  <Link href="/home" onClick={onClose}>
                     Home
                   </Link>
-                  <Link href="#" onClick={onClose}>
+                  <Link href="/about" onClick={onClose}>
                     About
                   </Link>
-                  <Link href="#" onClick={onClose}>
+                  <Link href="/services" onClick={onClose}>
                     Services
                   </Link>
-                  <Link href="#" onClick={onClose}>
+                  <Link href="services/inquiry" onClick={onClose}>
                     Contact
                   </Link>
                   {isAuthenticated ? (
-                    <Link href="#" onClick={logout}>
+                    <Link href="" onClick={logout}>
                       Logout
                     </Link>
                   ) : (
                     <>
-                      <Link href="#" onClick={onClose}>
+                      <Link href="/" onClick={onClose}>
                         Login
                       </Link>
-                      <Link href="#" onClick={onClose}>
+                      <Link href="/sign-up" onClick={onClose}>
                         Register
                       </Link>
                     </>

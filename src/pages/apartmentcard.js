@@ -21,6 +21,7 @@ const ApartmentCard = ({
   amenities,
   booked,
   photo_url,
+  isLoading,
   onBookNow,
 }) => {
   const renderStars = () => {
@@ -86,7 +87,14 @@ const ApartmentCard = ({
         <Text fontSize="md">{booked ? "Booked" : "Available"}</Text>
         {!booked && (
           <Center>
-            <Button colorScheme="blue" size="md" mt={4} onClick={onBookNow}>
+            <Button
+              colorScheme="blue"
+              size="md"
+              mt={4}
+              onClick={onBookNow}
+              isLoading={isLoading}
+              loadingText="booking"
+            >
               Book Now
             </Button>
           </Center>

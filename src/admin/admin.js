@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 
 const AdminPage = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const displaySidebar = useBreakpointValue({ base: "none", md: "block" });
+  const displaySidebar = useBreakpointValue({ base: "block", md: "block" });
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -70,6 +70,9 @@ const AdminPage = () => {
               </Link>
               <Link to="/bnbbookings">
                 <Button variant="ghost">Bnb bookings</Button>
+              </Link>
+              <Link to="/apartmentbookings">
+                <Button variant="ghost">Apartment bookings</Button>
               </Link>
             </VStack>
           </GridItem>

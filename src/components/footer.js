@@ -54,7 +54,6 @@ const Footer = () => {
             <FaTwitter size={24} />
           </Link>
         </Flex>
-        {/* Additional Content */}
         <Box
           textAlign={{ base: "center", md: "left" }}
           mt={{ base: 4, md: 0 }}
@@ -62,14 +61,14 @@ const Footer = () => {
         >
           <Text mb={2}>Stay Connected:</Text>
           <Flex flexWrap="wrap" gap="4">
-            <NavLink to={"/contact-us"}>Contact us</NavLink>
-            <NavLink to={"/feedback"}>Feedback</NavLink>
-            <NavLink to={"/faqs"}>FAQs</NavLink>
+            <NavLink to={"/services/inquiry"}>Contact us</NavLink>
+            <NavLink to={"services/inquiry"}>Feedback</NavLink>
+            <NavLink to={"/sign-up"}>join us</NavLink>
             <ChakraLink href="#" _hover={{ color: "gray.400" }}>
               Privacy
             </ChakraLink>
-            <ChakraLink href="#" _hover={{ color: "gray.400" }}>
-              Terms
+            <ChakraLink href="/about" _hover={{ color: "gray.400" }}>
+              About us
             </ChakraLink>
           </Flex>
           <Box mt={4}>
@@ -91,7 +90,7 @@ const Footer = () => {
         >
           <Text>
             &copy; {new Date().getFullYear()} All Rights Reserved{" "}
-            <ChakraLink href="#" color="green.300" ml={1}>
+            <ChakraLink href="/" color="green.300" ml={1}>
               PropertyHub Kenya
             </ChakraLink>
           </Text>
