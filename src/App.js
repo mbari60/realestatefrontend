@@ -41,10 +41,10 @@ function App() {
           <Route path="/appartments" element={<Apartments />} />
           <Route path="/bnbs" element={<Airbnbs />} />
           <Route path="/about" element={<AboutUs />} />
+          <Route path="/services/inquiry" element={<InquiryForm />} />
           {/* Normal routes accessible to all authenticated users */}
           {isAuthenticated && (
             <>
-              <Route path="/services/inquiry" element={<InquiryForm />} />
               <Route path="/services" element={<Services />} />
               <Route path="/services/transport" element={<TransportList />} />
               <Route path="/services/cleaners" element={<CleanerList />} />

@@ -62,6 +62,7 @@ const AddApartmentModal = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [apartmentData, setApartmentData] = useState({
     location: "",
+    name:"",
     description: "",
     price_per_month: "",
     rating: 0, // Initialize rating as 0
@@ -135,6 +136,14 @@ const AddApartmentModal = () => {
           <ModalHeader>Add Apartment</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
+            <FormControl>
+              <FormLabel>Name</FormLabel>
+              <Input
+                name="name"
+                value={apartmentData.name}
+                onChange={handleChange}
+              />
+            </FormControl>
             <FormControl>
               <FormLabel>Location</FormLabel>
               <Input
