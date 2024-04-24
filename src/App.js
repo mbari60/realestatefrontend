@@ -23,7 +23,6 @@ import "./index.css";
 import BnbBookings from "./admin/bnbbookings";
 import AppartmentBookings from "./admin/appartmentsbookings";
 import AboutUs from "./pages/about";
-import PrivateRoute from "./pages/privates";
 import { AuthContext } from "./context/authcontext";
 
 function App() {

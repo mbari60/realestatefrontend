@@ -23,7 +23,7 @@ const BnbBookings = () => {
 
   useEffect(() => {
     fetchBookings();
-  }, []);
+  });
 
   const fetchBookings = async () => {
     try {

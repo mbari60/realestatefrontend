@@ -34,7 +34,7 @@ const TransportList = () => {
 
   useEffect(() => {
     fetchTransportData();
-  }, []);
+  });
 
   const renderStars = (rating) => {
     const fullStars = Math.floor(rating);

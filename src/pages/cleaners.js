@@ -35,7 +35,7 @@ const CleanerList = () => {
 
   useEffect(() => {
     fetchCleanerData();
-  }, []);
+  });
 
   const renderStars = (rating) => {
     const fullStars = Math.floor(rating);

@@ -61,6 +61,7 @@ const Apartments = () => {
         apartment: id,
         user: user.id,
       }); // Send user ID along with apartment ID
+      console.log(res)
       // Update UI or show success message
       toast({
         title: "succees",
