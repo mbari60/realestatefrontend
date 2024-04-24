@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   Flex,
   Input,
+
   Select,
   SimpleGrid,
   Heading,
@@ -18,7 +19,7 @@ const Airbnbs = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get(`airbnbs`);
+        const response = await api.get(`airbnbs/`);
         setAirbnbs(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);

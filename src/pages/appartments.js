@@ -23,7 +23,7 @@ const Apartments = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await api.get(`apartments`);
+        const response = await api.get(`apartments/`);
         setApartments(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -31,7 +31,7 @@ const Apartments = () => {
     };
 
     fetchData();
-  }, []);
+  },[]);
 
   // Extract unique locations from apartments
   const locations = Array.from(
