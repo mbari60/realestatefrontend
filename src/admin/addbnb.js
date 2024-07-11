@@ -1,6 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { api } from "../utils/utils";
+import React, { useEffect, useState } from "react";
 import {
+  Center,
+  Flex,
+  Heading,
+  Input,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  Button,
+  useToast,
+  Box,
+  Stack,
+  FormControl,
+  FormLabel,
+  Checkbox,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -8,17 +24,11 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Button,
-  Input,
-  FormControl,
-  FormLabel,
-  Checkbox,
   Text,
-  Stack,
   CloseButton,
-  Box,
 } from "@chakra-ui/react";
 import { FaStar } from "react-icons/fa";
+import { api } from "../utils/utils";
 
 const StarRating = ({ rating, onStarClick }) => {
   const [hoverRating, setHoverRating] = useState(0);
@@ -59,22 +69,34 @@ const StarRating = ({ rating, onStarClick }) => {
 };
 
 const AddBnBModal = () => {
+  const [airbnbs, setAirbnbs] = useState([]);
+  const [editingAirbnbId, setEditingAirbnbId] = useState(null);
+  const [formData, setFormData] = useState({});
+  const toast = useToast();
   const [isOpen, setIsOpen] = useState(false);
   const [bnbData, setBnbData] = useState({
     name: "",
     location: "",
     description: "",
     price_per_night: "",
-    rating: 0, // Initialize rating as 0
+    rating: 0,
     amenities: [],
     max_guests: 1,
-    booked: false,
     photo_url: "",
   });
   const [amenities, setAmenities] = useState([]);
   const [selectedAmenities, setSelectedAmenities] = useState([]);
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.get("airbnbs/");
+        setAirbnbs(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
     const fetchAmenities = async () => {
       try {
         const response = await api.get("amenities/");
@@ -84,8 +106,71 @@ const AddBnBModal = () => {
       }
     };
 
+    fetchData();
     fetchAmenities();
   }, []);
+
+  const handleEditClick = (bnb) => {
+    setEditingAirbnbId(bnb.id);
+    setFormData(bnb);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSaveClick = async (id) => {
+    try {
+      const response = await api.put(`airbnbs/${id}/`, formData);
+      setAirbnbs((prevAirbnbs) =>
+        prevAirbnbs.map((bnb) => (bnb.id === id ? response.data : bnb))
+      );
+      toast({
+        title: "Update Successful",
+        description: "Airbnb details have been updated.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      setEditingAirbnbId(null);
+    } catch (error) {
+      console.error("Error updating Airbnb:", error);
+      toast({
+        title: "Update Failed",
+        description: "There was an error updating the Airbnb details.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
+
+  const handleDeleteClick = async (id) => {
+    try {
+      await api.delete(`airbnbs/${id}/`);
+      setAirbnbs((prevAirbnbs) => prevAirbnbs.filter((bnb) => bnb.id !== id));
+      toast({
+        title: "Delete Successful",
+        description: "Airbnb has been deleted.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+    } catch (error) {
+      console.error("Error deleting Airbnb:", error);
+      toast({
+        title: "Delete Failed",
+        description: "There was an error deleting the Airbnb.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -111,10 +196,24 @@ const AddBnBModal = () => {
     try {
       const dataToSend = { ...bnbData, amenities: selectedAmenities };
       const response = await api.post("airbnbs/", dataToSend);
-      console.log(response.data);
+      setAirbnbs((prevAirbnbs) => [...prevAirbnbs, response.data]);
+      toast({
+        title: "Airbnb Added",
+        description: "A new Airbnb has been added successfully.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
       setIsOpen(false);
     } catch (error) {
       console.error("Error:", error);
+      toast({
+        title: "Error Adding Airbnb",
+        description: "There was an error adding the new Airbnb.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
     }
   };
 
@@ -127,7 +226,7 @@ const AddBnBModal = () => {
   };
 
   return (
-    <>
+    <Flex direction="column" p={4} gap={4}>
       <Button colorScheme="blue" onClick={() => setIsOpen(true)}>
         Add BnB
       </Button>
@@ -147,7 +246,6 @@ const AddBnBModal = () => {
                 name="location"
                 value={bnbData.location}
                 onChange={handleChange}
-                isRequired
               />
             </FormControl>
             <FormControl>
@@ -156,17 +254,15 @@ const AddBnBModal = () => {
                 name="description"
                 value={bnbData.description}
                 onChange={handleChange}
-                isRequired
               />
             </FormControl>
             <FormControl>
-              <FormLabel>Maximum guests</FormLabel>
+              <FormLabel>Maximum Guests</FormLabel>
               <Input
                 type="number"
                 name="max_guests"
                 value={bnbData.max_guests}
                 onChange={handleChange}
-                isRequired
               />
             </FormControl>
             <FormControl>
@@ -175,7 +271,6 @@ const AddBnBModal = () => {
                 name="price_per_night"
                 value={bnbData.price_per_night}
                 onChange={handleChange}
-                isRequired
               />
             </FormControl>
             <FormControl>
@@ -183,7 +278,6 @@ const AddBnBModal = () => {
               <StarRating
                 rating={bnbData.rating}
                 onStarClick={handleStarClick}
-                isRequired
               />
             </FormControl>
             <FormControl>
@@ -224,7 +318,6 @@ const AddBnBModal = () => {
                 name="photo_url"
                 value={bnbData.photo_url}
                 onChange={handleChange}
-                isRequired
               />
             </FormControl>
           </ModalBody>
@@ -238,7 +331,129 @@ const AddBnBModal = () => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </>
+      {airbnbs.length > 0 ? (
+        <Table variant="simple">
+          <Thead>
+            <Tr>
+              <Th>Name</Th>
+              <Th>Location</Th>
+              <Th>Description</Th>
+              <Th>Price Per Night</Th>
+              <Th>Rating</Th>
+              <Th>Max Guests</Th>
+              <Th>Actions</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {airbnbs.map((bnb) => (
+              <Tr key={bnb.id}>
+                <Td>
+                  {editingAirbnbId === bnb.id ? (
+                    <Input
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                    />
+                  ) : (
+                    bnb.name
+                  )}
+                </Td>
+                <Td>
+                  {editingAirbnbId === bnb.id ? (
+                    <Input
+                      name="location"
+                      value={formData.location}
+                      onChange={handleInputChange}
+                    />
+                  ) : (
+                    bnb.location
+                  )}
+                </Td>
+                <Td>
+                  {editingAirbnbId === bnb.id ? (
+                    <Input
+                      name="description"
+                      value={formData.description}
+                      onChange={handleInputChange}
+                    />
+                  ) : (
+                    bnb.description
+                  )}
+                </Td>
+                <Td>
+                  {editingAirbnbId === bnb.id ? (
+                    <Input
+                      name="price_per_night"
+                      value={formData.price_per_night}
+                      onChange={handleInputChange}
+                    />
+                  ) : (
+                    bnb.price_per_night
+                  )}
+                </Td>
+                <Td>
+                  {editingAirbnbId === bnb.id ? (
+                    <StarRating
+                      rating={formData.rating}
+                      onStarClick={(rating) =>
+                        setFormData((prevData) => ({
+                          ...prevData,
+                          rating: rating,
+                        }))
+                      }
+                    />
+                  ) : (
+                    bnb.rating
+                  )}
+                </Td>
+                <Td>
+                  {editingAirbnbId === bnb.id ? (
+                    <Input
+                      type="number"
+                      name="max_guests"
+                      value={formData.max_guests}
+                      onChange={handleInputChange}
+                    />
+                  ) : (
+                    bnb.max_guests
+                  )}
+                </Td>
+                <Td>
+                  {editingAirbnbId === bnb.id ? (
+                    <Button
+                      colorScheme="teal"
+                      onClick={() => handleSaveClick(bnb.id)}
+                    >
+                      Save
+                    </Button>
+                  ) : (
+                    <Flex>
+                      <Button
+                        colorScheme="blue"
+                        onClick={() => handleEditClick(bnb)}
+                        mr={2}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        colorScheme="red"
+                        onClick={() => handleDeleteClick(bnb.id)}
+                      >
+                        Delete
+                      </Button>
+                    </Flex>
+                  )}
+                </Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      ) : (
+        <Center>
+          <Heading size="xl">No Airbnbs found.</Heading>
+        </Center>
+      )}
+    </Flex>
   );
 };
 

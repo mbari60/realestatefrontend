@@ -51,16 +51,16 @@ const AdminPage = () => {
           >
             <VStack spacing={4} p={4}>
               <Link to="/admin-dashboard">
-                <Button variant="ghost">Add Apartment</Button>
+                <Button variant="ghost">Apartment</Button>
               </Link>
               <Link to="/admin-addbnb">
-                <Button variant="ghost">Add Airbnb</Button>
+                <Button variant="ghost">Airbnb</Button>
               </Link>
               <Link to="/admin-addtransport">
-                <Button variant="ghost">Add Transport</Button>
+                <Button variant="ghost">Transport</Button>
               </Link>
               <Link to="/admin-addcleaner">
-                <Button variant="ghost">Add Cleaner</Button>
+                <Button variant="ghost">Cleaners</Button>
               </Link>
               <Link to="/admin-maintenance">
                 <Button variant="ghost">Maintenance Requests</Button>

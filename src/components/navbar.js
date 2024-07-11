@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Link as Blink} from "react-router-dom";
 import {
   Flex,
   Box,
@@ -11,8 +12,8 @@ import {
   DrawerContent,
   DrawerCloseButton,
   DrawerHeader,
-  DrawerBody,
   Link,
+  DrawerBody,
   VStack,
 } from "@chakra-ui/react";
 import { HamburgerIcon, ArrowBackIcon } from "@chakra-ui/icons";
@@ -26,7 +27,7 @@ const Navbar = () => {
     <Flex bg="blue.500" p="4" align="center">
       <Box p="2">
         <Heading size="md" color="white">
-          Your Logo
+          Property Hub
         </Heading>
       </Box>
       <Spacer />
@@ -40,7 +41,7 @@ const Navbar = () => {
         <Link href="/bnbs" color="white" mr="4">
           Airbnbs
         </Link>
-        {isAuthenticated && user &&(
+        {isAuthenticated && user && (
           <Link href="/services" color="white" mr="4">
             Services
           </Link>
@@ -89,30 +90,43 @@ const Navbar = () => {
               <DrawerHeader>Menu</DrawerHeader>
               <DrawerBody>
                 <VStack spacing="4">
-                  <Link href="/home" onClick={onClose}>
+                  <Blink to="/home" onClick={onClose}>
                     Home
-                  </Link>
-                  <Link href="/about" onClick={onClose}>
+                  </Blink>
+                  <Blink to="/appartments" onClick={onClose}>
+                    Appartments
+                  </Blink>
+                  <Blink to="/bnbs" onClick={onClose}>
+                    Air bnbs
+                  </Blink>
+                  <Blink to="/about" onClick={onClose}>
                     About
-                  </Link>
-                  <Link href="/services" onClick={onClose}>
-                    Services
-                  </Link>
-                  <Link href="services/inquiry" onClick={onClose}>
+                  </Blink>
+                  <Blink to="services/inquiry" onClick={onClose}>
                     Contact
-                  </Link>
+                  </Blink>
                   {isAuthenticated ? (
-                    <Link href="" onClick={logout}>
-                      Logout
-                    </Link>
+                    <>
+                      <Blink to="/services" onClick={onClose}>
+                        Services
+                      </Blink>
+                      {isAuthenticated && user && user.is_superuser && (
+                        <Blink to ="/admin" color="white" mr="4">
+                          Admin
+                        </Blink>
+                      )}
+                      <Blink to="/" onClick={logout}>
+                        Logout
+                      </Blink>
+                    </>
                   ) : (
                     <>
-                      <Link href="/" onClick={onClose}>
+                      <Blink to="/" onClick={onClose}>
                         Login
-                      </Link>
-                      <Link href="/sign-up" onClick={onClose}>
+                      </Blink>
+                      <Blink to="/sign-up" onClick={onClose}>
                         Register
-                      </Link>
+                      </Blink>
                     </>
                   )}
                 </VStack>

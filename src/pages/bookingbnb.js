@@ -19,15 +19,13 @@ import { AuthContext } from "../context/authcontext";
 const BookingModal = ({ isOpen, onClose, airbnb }) => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // State to manage loading state
   const { user } = useContext(AuthContext);
   const toast = useToast();
 
   const handleSubmit = async () => {
     if (!user) {
-      // If user is not logged in, redirect to login/signup page
-      // Replace this with your desired logic for redirection or displaying a message
-      console.log("User is not logged in");
-      // For example:
+      // If user is not logged in, display an error message
       toast({
         title: "Login Required",
         description: "You need to login before booking.",
@@ -39,6 +37,7 @@ const BookingModal = ({ isOpen, onClose, airbnb }) => {
     }
 
     try {
+      setIsLoading(true); // Set loading state to true while booking
       // Convert start and end dates to ISO 8601 format
       const formattedStartDate = new Date(startDate)
         .toISOString()
@@ -68,6 +67,8 @@ const BookingModal = ({ isOpen, onClose, airbnb }) => {
         duration: 3000,
         isClosable: true,
       });
+    } finally {
+      setIsLoading(false); // Reset loading state after booking attempt
     }
   };
 
@@ -96,10 +97,19 @@ const BookingModal = ({ isOpen, onClose, airbnb }) => {
           </FormControl>
         </ModalBody>
         <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
+          <Button
+            colorScheme="blue"
+            mr={3}
+            onClick={handleSubmit}
+            isLoading={isLoading} // Set isLoading to show loading state
+            loadingText="Booking..."
+            disabled={!startDate || !endDate || isLoading} // Disable button when loading or dates are not selected
+          >
             Book Now
           </Button>
-          <Button onClick={onClose}>Cancel</Button>
+          <Button onClick={onClose} disabled={isLoading}>
+            Cancel
+          </Button>
         </ModalFooter>
       </ModalContent>
     </Modal>

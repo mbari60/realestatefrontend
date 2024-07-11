@@ -23,15 +23,16 @@ const BnbBookings = () => {
 
   useEffect(() => {
     fetchBookings();
-  });
+  }, []); // Empty dependency array to run once on mount
 
   const fetchBookings = async () => {
     try {
       const response = await api.get("bnb_bookings/");
-      setBookings(response.data);
-      setFilteredBookings(response.data);
-      fetchUserData(response.data);
-      fetchAirbnbData(response.data);
+      const bookingsData = response.data;
+      setBookings(bookingsData);
+      setFilteredBookings(bookingsData);
+      fetchUserData(bookingsData);
+      fetchAirbnbData(bookingsData);
     } catch (error) {
       console.error("Error fetching bookings:", error);
     }
@@ -68,24 +69,27 @@ const BnbBookings = () => {
   };
 
   const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
-    filterBookings(e.target.value, dateSearchTerm);
+    const { value } = e.target;
+    setSearchTerm(value);
+    filterBookings(value, dateSearchTerm);
   };
 
   const handleDateSearch = (e) => {
-    setDateSearchTerm(e.target.value);
-    filterBookings(searchTerm, e.target.value);
+    const { value } = e.target;
+    setDateSearchTerm(value);
+    filterBookings(searchTerm, value);
   };
 
   const filterBookings = (searchTerm, dateSearchTerm) => {
-    const filtered = bookings.filter(
-      (booking) =>
-        airbnbData[booking.airbnb]
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase()) &&
+    const filtered = bookings.filter((booking) => {
+      const airbnbName = airbnbData[booking.airbnb];
+      return (
+        airbnbName &&
+        airbnbName.toLowerCase().includes(searchTerm.toLowerCase()) &&
         (booking.start_date.includes(dateSearchTerm) ||
           booking.end_date.includes(dateSearchTerm))
-    );
+      );
+    });
     setFilteredBookings(filtered);
   };
 
