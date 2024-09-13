@@ -21,6 +21,7 @@ import InquiriesTable from "./admin/inquiries";
 import Footer from "./components/footer";
 import "./index.css";
 import BnbBookings from "./admin/bnbbookings";
+import Analysis from "./admin/analysis"
 import AppartmentBookings from "./admin/appartmentsbookings";
 import AboutUs from "./pages/about";
 import { AuthContext } from "./context/authcontext";
@@ -67,6 +68,7 @@ function App() {
               <Route path="/admin-maintenance" element={<MaintenanceTable />} />
               <Route path="/admin-inquiries" element={<InquiriesTable />} />
               <Route path="/bnbbookings" element={<BnbBookings />} />
+              <Route path="/analysis" element={<Analysis />} />
               <Route
                 path="/apartmentbookings"
                 element={<AppartmentBookings />}

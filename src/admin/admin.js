@@ -74,6 +74,9 @@ const AdminPage = () => {
               <Link to="/apartmentbookings">
                 <Button variant="ghost">Apartment bookings</Button>
               </Link>
+               <Link to="/analysis">
+                <Button variant="ghost">Analysis</Button>
+              </Link>
             </VStack>
           </GridItem>
           <GridItem
